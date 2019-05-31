@@ -35,11 +35,11 @@ Additionally, the script totals space used before/after and the difference saved
 
 ### Todo
 
-[ ] Some additional warnings/checks perhaps? Like "if pwd is /, put up red and yellow flashing text and ask for double secret confirmation before proceeding"
-[ ] Probably double check to make sure that all of the git cleanup commands are necessary (could be overlap)
-[ ] More documentation (e.g. --help)
-[ ] Options for depth control (e.g. specify a depth to use or a date)
-[ ] Error Checking / Prettier Output
-[ ] Test on more systems (Initial version was written on Termux/Android)
+- [ ] Some additional warnings/checks perhaps? Like "if pwd is /, put up red and yellow flashing ext and ask for double secret confirmation before proceeding"
+- [ ] Probably double check to make sure that all of the git cleanup commands are necessary (could be overlap)
+- [ ] More documentation (e.g. --help)
+- [ ] Options for depth control (e.g. specify a depth to use or a date)
+- [ ] Error Checking / Prettier Output
+- [ ] Test on more systems (Initial version was written on Termux/Android)
 
 
