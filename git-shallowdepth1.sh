@@ -19,7 +19,7 @@
 # This is quick and dirty and might break things.
 
 
-# run git commands on the current directory to prune to depth=1 and for all submodules too 
+# run git commands on the current directory to prune to depth=1 and for all submodules too
 
 declare -i GLO_SIZE_BEFORE=0
 declare -i GLO_SIZE_AFTER=0
@@ -38,12 +38,10 @@ case "$response" in
     echo 0
     ;;
 esac
-  
-  
 }
 
 
-pruneGitDir() 
+pruneGitDir()
 {
 cd $1
 sizeBeforeBytes=$(du -sb $1 | cut -f1)
@@ -66,25 +64,25 @@ echo "GIT: Repack (-adfF)"
 git repack -adfF
 
 echo "GIT: GC (--aggressive)"
-git gc --aggressive 
+git gc --aggressive
 sleep 2s
 
 
 gsm=$(git submodule)
 gsms=$(git submodule | wc -l)
-if [[ $gsms -gt 0 ]]; then 
+if [[ $gsms -gt 0 ]]; then
   #there is 1 or more submodule to address
   #git submodule foreach --recursive 'git-fetch --depth=1 -P'
-  #git submodule foreach --recursive 'git-reflog expire --expire=0 --all' 
+  #git submodule foreach --recursive 'git-reflog expire --expire=0 --all'
   #git submodule foreach --recursive 'git-gc --aggressive'
   sleepTime=$(($gsms * 4))
   echo ".:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:."
   echo "+ + + + + + + + + + + + + + + + + + +"
   echo "+  S U B M O D U L E S   F O U N D  +"
-  fecho "+-----------------------------------+"
+  echo "+-----------------------------------+"
   echo "Cleaning $gsms submodules"
   echo "Pruning/Fetch to Depth=1"
-  git submodule foreach --recursive 'git-fetch --depth=1 -pP' 
+  git submodule foreach --recursive 'git-fetch --depth=1 -pP'
   sleep $sleepTime
   echo "Reflog: Expire"
   git submodule foreach --recursive 'git-reflog expire --expire=0 --all'
@@ -142,7 +140,7 @@ findAllGitReposFromCD()
       echo "Total Bytes After: $GLO_SIZE_AFTER"
       echo "Total Bytes Saveed: $GLO_SIZE_DIFF"
     done
-    
+
     echo "++++++++++"
     echo "Done!"
     echo "Total Command Summary"
@@ -156,7 +154,7 @@ findAllGitReposFromCD()
 
 
 cwd=$(pwd)
-if [[ ! -d $cwd/.git ]]; then 
+if [[ ! -d $cwd/.git ]]; then
   echo "Not a git repository"
   echo "finding all git repos from the cwd"
   findAllGitReposFromCD
@@ -165,16 +163,16 @@ else
   echo "Current Directory is a GIT Repository"
   echo "Will prune $cwd"
   conf=$(confirm)
-  if [[ $conf -eq 0 ]]; then 
+  if [[ $conf -eq 0 ]]; then
     echo "Action cancelled."
     exit
   fi
-  
+
   sizeBeforeBytes=$(du -sb $cwd | cut -f1)
   pruneGitDir $cwd
   sizeAfterBytes=$(du -sb $cwd | cut -f1)
   diffBytes=$(($sizeBeforeBytes - $sizeAfterBytes))
-  
+
   #GLO_SIZE_BEFORE+=sizeBeforeBytes
   #GLO_SIZE_AFTER+=sizeAfterBytes
   #GLO_SIZE_DIFF+=diffBytes
@@ -191,7 +189,7 @@ else
   echo "Total Bytes Saveed: $GLO_SIZE_DIFF"
   echo "----------------------------------"
 
-fi 
+fi
 
 
 
